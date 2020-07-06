@@ -65,16 +65,16 @@ int main()
         } 
 	} 
 	
-	for(k = 0; k <= e; ++k){
+    for(k = 0; k <= e; ++k){
         result = min(result, dp[n][d][k]);
-	} 
-	if(result >= INT_MAX){
+    } 
+    if(result >= INT_MAX){
         printf("0");
-	}
-	else {
+    }
+    else {
         printf("%d", result);
-	}		
-	return 0;
+    }		
+    return 0;
 } 
 
 ```

@@ -84,9 +84,71 @@ int main()
     }
     else
     {
-        printf("%d\n", result);
+        printf("%d \n", result);
     }
     return 0;
 }
 ```
 
+dfs + 记忆化dp
+``` cpp
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+#define MAX 0x7ffffff
+using namespace std;
+
+int dp[25][105][105];
+
+int dfs(int n, int e, int d)
+{
+    if (dp[n][e][d] != -1)
+    {
+        return dp[n][e][d];
+    }
+    if (d == 0)
+    {
+        return 0;
+    }
+
+    dp[n][e][d] = MAX;
+
+    if (n == 1)
+    {
+        // 领头牛
+        for (int v = 1; v * v <= e && v <= d; ++v)
+        {
+            dp[n][e][d] = min(dp[n][e][d], dfs(n, e - v * v, d - v) + 1);
+        }
+    }
+    else
+    {
+        // 非领头牛
+        for (int v = 1; v <= d; ++v)
+        {
+            dp[n][e][d] = min(dp[n][e][d], dfs(n - 1, e - v, d - v) + dfs(1, e, v));
+        }
+    }
+    return dp[n][e][d];
+}
+
+int main()
+{
+    int n, e, d;
+    while (~scanf("%d%d%d", &n, &e, &d))
+    {
+        memset(dp, -1, sizeof(dp));
+        int result = dfs(n, e, d);
+        if (result >= MAX)
+        {
+            printf("0\n");
+        }
+        else
+        {
+            printf("%d\n", result);
+        }
+    }
+    return 0;
+}
+
+```

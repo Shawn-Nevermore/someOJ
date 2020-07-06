@@ -17,18 +17,19 @@
 （2）转移方程
 设 `dp[i][j][k]` 表示此时第 i 头牛领跑，已经跑了 j 圈，消耗能量 k 的状态下的最少耗时。那么 `dp[i][j][k]` 的状态可转移为：
 
-- 第 i 头牛继续领跑：消耗一分钟，速度为 v 圈/分钟。
-- 头牛更换：不消耗时间，此时已经跑过 j 圈的非头牛消耗的体力是 j。
+* 第 i 头牛继续领跑：消耗一分钟，速度为 v 圈/分钟。
+* 头牛更换：不消耗时间，此时已经跑过 j 圈的非头牛消耗的体力是 j。
 
 因此得到方程： 
-- `dp[i][j + v][k + v*v] = min(dp[i][j + v][k + v*v], dp[i][j][k] + 1);`
-- `dp[i + 1][j][j] = min(dp[i + 1][j][j], dp[i][j][k])`
 
+* `dp[i][j + v][k + v*v] = min(dp[i][j + v][k + v*v], dp[i][j][k] + 1);`
+* `dp[i + 1][j][j] = min(dp[i + 1][j][j], dp[i][j][k])`
 （3）初始条件，边界情况
-设初始条件：`dp[1][0][0] = 0;`
+设初始条件： `dp[1][0][0] = 0;`
 
 ## 代码
-```cpp
+
+``` cpp
 #include<iostream>
 #include<climits>
 using namespace std;
@@ -43,23 +44,23 @@ int main()
         for(j = 0; j <= d; ++j){ 
             for(k = 0; k <= e; ++k){
                 dp[i][j][k] = INT_MAX;
-			}
+            }
         } 
 	}			
     // 初始条件
 	dp[1][0][0] = 0;
 	for(i = 1; i <= n; ++i){
-		for(j = 0; j < d; ++j){
-			for(k = 0; k <= e; ++k){
+        for(j = 0; j < d; ++j){
+            for(k = 0; k <= e; ++k){
                 // 枚举i、j、k，当dp[i][j][k]有意义时，进行状态转移
-				if(dp[i][j][k] != INT_MAX){
-					for(v = 0; j+v<=d && k+v*v <= e; ++v){
-						dp[i][j + v][k + v*v] = min(dp[i][j + v][k + v*v], dp[i][j][k] + 1);
-					} 
-					if(i < n){
-						dp[i + 1][j][j] = min(dp[i + 1][j][j], dp[i][j][k]);
-					} 
-				}
+                if(dp[i][j][k] != INT_MAX){
+                    for(v = 0; j+v<=d && k+v*v <= e; ++v){
+                        dp[i][j + v][k + v*v] = min(dp[i][j + v][k + v*v], dp[i][j][k] + 1);
+                    } 
+                    if(i < n){
+                        dp[i + 1][j][j] = min(dp[i + 1][j][j], dp[i][j][k]);
+                    } 
+                }
 			}	
 		} 
 	} 

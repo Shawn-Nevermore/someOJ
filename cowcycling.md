@@ -61,18 +61,18 @@ int main()
                         dp[i + 1][j][j] = min(dp[i + 1][j][j], dp[i][j][k]);
                     } 
                 }
-			}	
-		} 
+            }
+        } 
 	} 
 	
 	for(k = 0; k <= e; ++k){
-		result = min(result, dp[n][d][k]);
+        result = min(result, dp[n][d][k]);
 	} 
 	if(result >= INT_MAX){
-		printf("0");
+        printf("0");
 	}
 	else {
-		printf("%d", result);
+        printf("%d", result);
 	}		
 	return 0;
 } 

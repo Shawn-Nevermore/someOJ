@@ -33,14 +33,14 @@
 
 ``` cpp
 #include <iostream>
-#include <climits>
+#define MAX 0x7ffffff
 using namespace std;
 
-// 第 i 头牛领跑，已经跑了 j 圈，消耗能量 k 的状态下的最少耗时
-int dp[32][128][128];
+int dp[25][105][105];   // 第 i 头牛领跑，已经跑了 j 圈，消耗能量 k 的状态下的最少耗时
+
 int main()
 {
-    int n, e, d, i, j, k, v, result = INT_MAX;
+    int n, e, d, i, j, k, v, result = MAX;
     scanf("%d%d%d", &n, &e, &d);
     for (i = 0; i <= n; ++i)
     {
@@ -48,29 +48,27 @@ int main()
         {
             for (k = 0; k <= e; ++k)
             {
-                dp[i][j][k] = INT_MAX;
+                dp[i][j][k] = MAX;
             }
         }
     }
-    // 初始条件
+
+    // 初始化
     dp[1][0][0] = 0;
     for (i = 1; i <= n; ++i)
     {
-        for (j = 0; j <= d; ++j)
+        for (j = 0; j < d; ++j)
         {
             for (k = 0; k <= e; ++k)
             {
                 // 枚举i、j、k，当dp[i][j][k]有意义时，进行状态转移
-                if (dp[i][j][k] != INT_MAX)
+                if (dp[i][j][k] != MAX)
                 {
                     for (v = 0; j + v <= d && k + v * v <= e; ++v)
                     {
                         dp[i][j + v][k + v * v] = min(dp[i][j + v][k + v * v], dp[i][j][k] + 1);
                     }
-                    if (i < n)
-                    {
-                        dp[i + 1][j][j] = min(dp[i + 1][j][j], dp[i][j][k]);
-                    }
+                    dp[i + 1][j][j] = min(dp[i + 1][j][j], dp[i][j][k]);
                 }
             }
         }
@@ -80,14 +78,15 @@ int main()
     {
         result = min(result, dp[n][d][k]);
     }
-    if (result >= INT_MAX)
+    if (result >= MAX)
     {
-        printf("0");
+        printf("0\n");
     }
     else
     {
-        printf("%d", result);
+        printf("%d\n", result);
     }
     return 0;
 }
 ```
+

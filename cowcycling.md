@@ -92,6 +92,8 @@ int main()
 
 ## dfs + 记忆化dp
 
+另一种我能想到的是用搜索的方法，然后用记忆化搜索来剪枝，即用一个数组 `dp[n][e][d]` 来记录此时共 n 头奶牛，能量为 e，跑 d 圈的最少耗时。
+
 ``` cpp
 #include <iostream>
 #include <cstring>
@@ -99,7 +101,7 @@ int main()
 #define MAX 0x7ffffff
 using namespace std;
 
-int dp[25][105][105];
+int dp[25][105][105];   // n 头奶牛，能量为 e，跑 d 圈的最少耗时
 
 int dfs(int n, int e, int d)
 {
